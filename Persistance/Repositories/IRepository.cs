@@ -1,5 +1,6 @@
-﻿using Domain.Entities;
-using Microsoft.EntityFrameworkCore.Query;
+﻿using Microsoft.EntityFrameworkCore.Query;
+using Persistance.Dynamic;
+using Persistance.Entities;
 using Persistance.Paging;
 using System;
 using System.Collections.Generic;
@@ -51,11 +52,11 @@ namespace Repositories
 
         TEntity Add(TEntity entity);
 
-        ICollection<TEntity> AddRange(ICollection<TEntity> entity);
+        ICollection<TEntity> AddRange(ICollection<TEntity> entities);
 
         TEntity Update(TEntity entity);
 
-        ICollection<TEntity> UpdateRange(ICollection<TEntity> entity);
+        ICollection<TEntity> UpdateRange(ICollection<TEntity> entities);
 
         TEntity Delete(TEntity entity, bool permament = false);
 

@@ -1,12 +1,13 @@
-﻿using System;
+﻿using Persistance.Repositories;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain.Entities
+namespace Persistance.Entities
 {
-    public class Entity<TId>
+    public class Entity<TId>:IEntityTimestamps
     {
         public TId Id { get; set; }
         public DateTime CreatedDate { get; set; }

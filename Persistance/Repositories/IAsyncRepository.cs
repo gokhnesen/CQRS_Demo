@@ -1,6 +1,8 @@
-﻿using Domain.Entities;
-using Microsoft.EntityFrameworkCore.Query;
+﻿using Microsoft.EntityFrameworkCore.Query;
+using Persistance.Dynamic;
+using Persistance.Entities;
 using Persistance.Paging;
+using Persistance.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Repositories
 {
-    public interface IAsyncRepository<TEntity,TEntityId> : IQueryable<TEntity> where TEntity : Entity<TEntityId>
+    public interface IAsyncRepository<TEntity,TEntityId> : IQuery<TEntity> where TEntity : Entity<TEntityId>
     {
         Task<TEntity?> GetAsync(
             Expression<Func<TEntity,bool>> predicate,Func<IQueryable<TEntity>, IIncludableQueryable<TEntity,object>>? include =null,
@@ -51,11 +53,11 @@ namespace Repositories
 
         Task<TEntity> AddAsync(TEntity entity);
 
-        Task<ICollection<TEntity>> AddRangeAsync(ICollection<TEntity> entity);
+        Task<ICollection<TEntity>> AddRangeAsync(ICollection<TEntity> entities);
 
         Task<TEntity> UpdateAsync(TEntity entity);
 
-        Task<ICollection<TEntity>> UpdateRangeAsnyc(ICollection<TEntity> entity);
+        Task<ICollection<TEntity>> UpdateRangeAsnyc(ICollection<TEntity> entities);
 
         Task<TEntity> DeleteAsync(TEntity entity, bool permament = false);
 
