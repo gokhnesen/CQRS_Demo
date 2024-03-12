@@ -145,7 +145,7 @@ namespace Persistance.Repositories
                 object? navValue = navigation.PropertyInfo.GetValue(entity);
                 if(navigation.IsCollection)
                 {
-                    if(navValue == null)
+                    if (navValue == null)
                 }
             }
         }
