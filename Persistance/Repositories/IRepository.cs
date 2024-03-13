@@ -2,6 +2,7 @@
 using Persistance.Dynamic;
 using Persistance.Entities;
 using Persistance.Paging;
+using Persistance.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Repositories
 {
-    public interface IRepository<TEntity, TEntityId> :IQueryable<TEntity> where TEntity : Entity<TEntityId>
+    public interface IRepository<TEntity, TEntityId> :IQuery<TEntity> where TEntity : Entity<TEntityId>
     {
         TEntity? Get(
             Expression<Func<TEntity, bool>> predicate, Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = null,
