@@ -1,6 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore.Query;
+﻿using Domain.Entities;
+using Microsoft.EntityFrameworkCore.Query;
 using Persistance.Dynamic;
-using Persistance.Entities;
 using Persistance.Paging;
 using Persistance.Repositories;
 using System;
