@@ -1,11 +1,11 @@
-﻿using Domain.Entities;
+﻿using Application.Features.Dynamic;
+using Application.Features.Paging;
+using Application.Interfaces;
+using Domain.Entities;
 using Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Query;
-using Persistance.Dynamic;
-using Persistance.Paging;
-using Repositories;
 using System;
 using System.Collections;
 using System.Collections.Generic;

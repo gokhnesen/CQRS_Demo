@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Persistance.Dynamic
+namespace Application.Features.Dynamic
 {
     public class DynamicQuery
     {

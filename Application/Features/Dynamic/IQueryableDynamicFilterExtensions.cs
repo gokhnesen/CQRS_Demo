@@ -5,7 +5,7 @@ using System.Linq.Dynamic.Core;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Persistance.Dynamic
+namespace Application.Features.Dynamic
 {
     public static class IQueryableDynamicFilterExtensions
     {

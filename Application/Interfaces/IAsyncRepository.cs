@@ -1,8 +1,7 @@
-﻿using Domain.Entities;
+﻿using Application.Features.Dynamic;
+using Application.Features.Paging;
+using Domain.Entities;
 using Microsoft.EntityFrameworkCore.Query;
-using Persistance.Dynamic;
-using Persistance.Paging;
-using Persistance.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +9,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Repositories
+namespace Application.Interfaces
 {
     public interface IAsyncRepository<TEntity,TEntityId> : IQuery<TEntity> where TEntity : Entity<TEntityId>
     {
