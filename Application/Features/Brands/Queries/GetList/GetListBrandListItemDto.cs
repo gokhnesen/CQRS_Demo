@@ -4,13 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Features.Brands.Commands.Create
+namespace Application.Features.Brands.Queries.GetList
 {
-    public class CreatedBrandResponse
+    public class GetListBrandListItemDto
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
-        public DateTime CreatedDate { get; set; }
-
     }
 }
