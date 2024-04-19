@@ -16,33 +16,4 @@ namespace Persistance.Repositories
 
         }
     }
-
-    public class CarRepository : EfRepositoryBase<Car, Guid, BaseDbContext>, ICarRepository
-    {
-        public CarRepository(BaseDbContext context) : base(context)
-        {
-
-        }
-    }
-    public class ModelRepository : EfRepositoryBase<Model, Guid, BaseDbContext>, ICarRepository
-    {
-        public CarRepository(BaseDbContext context) : base(context)
-        {
-
-        }
-    }
-    public class CarRepository : EfRepositoryBase<Car, Guid, BaseDbContext>, ICarRepository
-    {
-        public CarRepository(BaseDbContext context) : base(context)
-        {
-
-        }
-    }
-    public class CarRepository : EfRepositoryBase<Car, Guid, BaseDbContext>, ICarRepository
-    {
-        public CarRepository(BaseDbContext context) : base(context)
-        {
-
-        }
-    }
 }
