@@ -20,12 +20,11 @@ namespace Application.Features.Dynamic
             {"gt",">"},
             {"gte",">=" },
             {"isnull","== null" },
-            {"isnotnull","!=null" },
-            {"starswith","StartsWith" },
+            {"isnotnull","!= null" },
+            {"startswith","StartsWith" },
             {"endswith","EndsWith" },
             {"contains","Contains" },
             {"doesnotcontain","Contains" },
-
         };
 
         public static IQueryable<T> ToDynamic<T>(this IQueryable<T> query, DynamicQuery dynamicQuery)
@@ -37,10 +36,10 @@ namespace Application.Features.Dynamic
             return query;
         }
 
-        private static IQueryable<T> Filter<T>(IQueryable<T> queryable,Filter filter)
+        private static IQueryable<T> Filter<T>(IQueryable<T> queryable, Filter filter)
         {
             IList<Filter> filters = GetAllFilters(filter);
-            string?[] values = filters.Select(f => f.Value).ToArray();
+            string[] values = filters.Select(f => f.Value).ToArray();
             string where = Transform(filter, filters);
             if (!string.IsNullOrEmpty(where) && values != null)
                 queryable = queryable.Where(where, values);
@@ -48,7 +47,7 @@ namespace Application.Features.Dynamic
             return queryable;
         }
 
-        private static IQueryable<T> Sort<T>(IQueryable<T> queryable,IEnumerable<Sort> sort)
+        private static IQueryable<T> Sort<T>(IQueryable<T> queryable, IEnumerable<Sort> sort)
         {
             foreach (Sort item in sort)
             {
@@ -57,9 +56,9 @@ namespace Application.Features.Dynamic
                 if (string.IsNullOrEmpty(item.Direction) || !_orders.Contains(item.Direction))
                     throw new ArgumentException("Invalid Order Type");
             }
-            if(sort.Any())
+            if (sort.Any())
             {
-                string ordering = string.Join(separator: ",", values: sort.Select(s => $"{s.Field}{s.Direction}"));
+                string ordering = string.Join(",", sort.Select(s => $"{s.Field} {s.Direction}"));
                 return queryable.OrderBy(ordering);
             }
             return queryable;
@@ -71,6 +70,7 @@ namespace Application.Features.Dynamic
             GetFilters(filter, filters);
             return filters;
         }
+
         private static void GetFilters(Filter filter, IList<Filter> filters)
         {
             filters.Add(filter);
@@ -79,7 +79,7 @@ namespace Application.Features.Dynamic
                     GetFilters(item, filters);
         }
 
-        public static string Transform(Filter filter,IList<Filter> filters)
+        public static string Transform(Filter filter, IList<Filter> filters)
         {
             if (string.IsNullOrEmpty(filter.Field))
                 throw new ArgumentException("Invalid Field");
@@ -89,12 +89,12 @@ namespace Application.Features.Dynamic
             int index = filters.IndexOf(filter);
             string comparison = _operators[filter.Operator];
             StringBuilder where = new();
-            if(!string.IsNullOrEmpty(filter.Value))
+            if (!string.IsNullOrEmpty(filter.Value))
             {
                 if (filter.Operator == "doesnotcontain")
                     where.Append($"np({filter.Field}).{comparison}(@{index.ToString()})");
                 else if (comparison is "StartsWith" or "EndsWith" or "Contains")
-                    where.Append($"(np({filter.Field}).{comparison}(@{index.ToString()})");
+                    where.Append($"np({filter.Field}).{comparison}(@{index.ToString()})");
                 else
                     where.Append($"np({filter.Field}) {comparison}(@{index.ToString()})");
             }
@@ -102,11 +102,11 @@ namespace Application.Features.Dynamic
             {
                 where.Append($"np({filter.Field}){comparison}");
             }
-            if(filter.Logic is not null && filter.Filters is not null && filter.Filters.Any())
+            if (filter.Logic is not null && filter.Filters is not null && filter.Filters.Any())
             {
                 if (!_logics.Contains(filter.Logic))
                     throw new ArgumentException("Invalid Logic");
-                return $"{where} {filter.Logic} ({string.Join(separator: $"{filter.Logic}", value: filter.Filters.Select(f => Transform(f, filters)).ToArray())})";
+                return $"{where} {filter.Logic} ({string.Join($" {filter.Logic} ", filter.Filters.Select(f => Transform(f, filters)).ToArray())})";
             }
             return where.ToString();
         }
