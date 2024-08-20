@@ -1,5 +1,6 @@
 
 using Application;
+using Application.Exceptions.Extensions;
 using Persistance;
 
 namespace WebApi
@@ -24,6 +25,8 @@ namespace WebApi
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
+            //if (app.Environment.IsProduction())
+            app.ConfigureCustomExceptionMiddleware();
 
             app.UseHttpsRedirection();
 
