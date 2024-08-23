@@ -30,9 +30,11 @@ namespace Application.Features.Brands.Commands.Create
 
             Brand brand = _mapper.Map<Brand>(request);
             brand.Id = Guid.NewGuid();
-            var result = await _brandRepository.AddAsync(brand);
+            await _brandRepository.AddAsync(brand);
+            //await _brandRepository.AddAsync(brand);
 
-            CreatedBrandResponse createdBrandResponse = _mapper.Map<CreatedBrandResponse>(result);
+
+            CreatedBrandResponse createdBrandResponse = _mapper.Map<CreatedBrandResponse>(brand);
             return createdBrandResponse;
         }
     }
