@@ -1,4 +1,5 @@
 ﻿using Application.Features.Brands.Rules;
+using Application.Pipelines.Caching;
 using Application.Pipelines.Transaction;
 using Application.Pipelines.Validation;
 using FluentValidation;
@@ -27,6 +28,7 @@ namespace Application
                 configuration.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
                 configuration.AddOpenBehavior(typeof(RequestValidationBehavior<,>));
                 configuration.AddOpenBehavior(typeof(TransactionScopeBehavior<,>));
+                configuration.AddOpenBehavior(typeof(CachingBehavior<,>));
 
             });
 

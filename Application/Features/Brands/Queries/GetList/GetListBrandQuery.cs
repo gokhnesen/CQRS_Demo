@@ -1,6 +1,7 @@
 ﻿using Application.Features.Paging;
 using Application.Features.Requests;
 using Application.Features.Responses;
+using Application.Pipelines.Caching;
 using Application.Services.Repositories;
 using AutoMapper;
 using Domain.Entities;
@@ -13,9 +14,15 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Brands.Queries.GetList
 {
-    public class GetListBrandQuery:IRequest<GetListResponse<GetListBrandListItemDto>>
+    public class GetListBrandQuery : IRequest<GetListResponse<GetListBrandListItemDto>>, ICachableRequest
     {
         public PageRequest PageRequest { get; set; }
+
+        public string CacheKey => $"GetListBrandQuery({PageRequest.PageIndex},{PageRequest.PageSize})";
+
+        public bool BypassCache { get; }
+
+        public TimeSpan? SlidingExpiration { get; }
 
         public class GetListBrandQueryHandler : IRequestHandler<GetListBrandQuery,GetListResponse<GetListBrandListItemDto>>
         {
