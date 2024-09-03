@@ -1,4 +1,5 @@
-﻿using Application.Pipelines.Transaction;
+﻿using Application.Pipelines.Caching;
+using Application.Pipelines.Transaction;
 using MediatR;
 using System;
 using System.Collections.Generic;

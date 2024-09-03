@@ -1,4 +1,5 @@
 ﻿using Application.Features.Brands.Rules;
+using Application.Pipelines.Caching;
 using Application.Services.Repositories;
 using AutoMapper;
 using Domain.Entities;
@@ -11,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Brands.Commands.Create
 {
-    public class CreateBrandCommandHandler : IRequestHandler<CreateBrandCommand, CreatedBrandResponse>
+    public class CreateBrandCommandHandler : IRequestHandler<CreateBrandCommand, CreatedBrandResponse>, ICacheRemoverRequest
     {
         private readonly IBrandRepository _brandRepository;
         private readonly IMapper _mapper;
@@ -23,6 +24,10 @@ namespace Application.Features.Brands.Commands.Create
             _mapper = mapper;
             _brandBusinessRules = brandBusinessRules;
         }
+
+        public string CacheKey => throw new NotImplementedException();
+
+        public bool BypassCache => throw new NotImplementedException();
 
         public async Task<CreatedBrandResponse>? Handle(CreateBrandCommand request, CancellationToken cancellationToken)
         {
