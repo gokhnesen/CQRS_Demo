@@ -25,9 +25,11 @@ namespace Application.Features.Brands.Commands.Create
             _brandBusinessRules = brandBusinessRules;
         }
 
-        public string CacheKey => throw new NotImplementedException();
+        public string CacheKey => "";
 
-        public bool BypassCache => throw new NotImplementedException();
+        public bool BypassCache => false;
+
+        public string? CacheGroupKey => "GetBrands";
 
         public async Task<CreatedBrandResponse>? Handle(CreateBrandCommand request, CancellationToken cancellationToken)
         {

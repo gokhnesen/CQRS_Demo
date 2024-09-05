@@ -1,4 +1,5 @@
 ﻿using Application.Features.Brands.Commands.Update;
+using Application.Pipelines.Caching;
 using Application.Services.Repositories;
 using AutoMapper;
 using Domain.Entities;
@@ -11,9 +12,14 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Brands.Commands.Delete
 {
-    public class DeleteBrandCommand:IRequest<DeleteBrandResponse>
+    public class DeleteBrandCommand:IRequest<DeleteBrandResponse>, ICacheRemoverRequest
     {
         public Guid Id { get; set; }
+        public string CacheKey => "";
+
+        public bool BypassCache => false;
+
+        public string? CacheGroupKey => "GetBrands";
 
         public class DeleteBrandCommandHandler : IRequestHandler<DeleteBrandCommand, DeleteBrandResponse>
         {
