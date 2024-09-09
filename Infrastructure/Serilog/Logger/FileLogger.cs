@@ -19,7 +19,7 @@ namespace Infrastructure.Serilog.Logger
         {
             _configuration = configuration;
 
-            FileLogConfiguration logConfig = configuration.GetSection("SerilogLogonfigurations:FileLogConfiguration").Get<FileLogConfiguration>()
+            FileLogConfiguration logConfig = configuration.GetSection("SeriLogConfigurations:FileLogConfiguration").Get<FileLogConfiguration>()
                 ?? throw new Exception(SerilogMessages.NullOptionsMessage);
 
             

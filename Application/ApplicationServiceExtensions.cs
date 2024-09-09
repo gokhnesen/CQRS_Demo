@@ -1,8 +1,11 @@
 ﻿using Application.Features.Brands.Rules;
 using Application.Pipelines.Caching;
+using Application.Pipelines.Logging;
 using Application.Pipelines.Transaction;
 using Application.Pipelines.Validation;
 using FluentValidation;
+using Infrastructure.Serilog;
+using Infrastructure.Serilog.Logger;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -30,8 +33,11 @@ namespace Application
                 configuration.AddOpenBehavior(typeof(TransactionScopeBehavior<,>));
                 configuration.AddOpenBehavior(typeof(CachingBehavior<,>));
                 configuration.AddOpenBehavior(typeof(CacheRemovingBehavior<,>));
+                configuration.AddOpenBehavior(typeof(LoggingBehavior<,>));
 
             });
+
+            services.AddSingleton<LoggerServiceBase, FileLogger>();
 
             return services;
         }
