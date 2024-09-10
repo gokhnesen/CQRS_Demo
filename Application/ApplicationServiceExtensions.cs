@@ -37,7 +37,7 @@ namespace Application
 
             });
 
-            services.AddSingleton<LoggerServiceBase, FileLogger>();
+            services.AddSingleton<LoggerServiceBase, MsSqlLogger>();
 
             return services;
         }

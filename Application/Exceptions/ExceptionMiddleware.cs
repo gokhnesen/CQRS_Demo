@@ -1,9 +1,12 @@
 ﻿using Application.Exceptions.Handlers;
+using Infrastructure.Logging;
+using Infrastructure.Serilog;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace Application.Exceptions
@@ -12,11 +15,15 @@ namespace Application.Exceptions
     {
         private readonly RequestDelegate _next;
         private readonly HttpExceptionHandler _httpExceptionHandler;
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly LoggerServiceBase _loggerService;
 
-        public ExceptionMiddleware(RequestDelegate next)
+        public ExceptionMiddleware(RequestDelegate next, IHttpContextAccessor httpContextAccessor, LoggerServiceBase loggerService)
         {
             _next = next;
             _httpExceptionHandler = new HttpExceptionHandler();
+            _httpContextAccessor = httpContextAccessor;
+            _loggerService = loggerService;
         }
 
         public async Task Invoke(HttpContext context)
@@ -28,8 +35,28 @@ namespace Application.Exceptions
 
             catch(Exception exception)
             {
+                await LogException(context,exception);
                 await HandleExceptionAsync(context.Response, exception);
             }
+        }
+
+        private Task LogException(HttpContext context, Exception exception)
+        {
+            List<LogParameter> logParameters = new()
+            {
+                new LogParameter{Type=context.GetType().Name,Value=exception.ToString()}
+            };
+
+            LogDetailWithException logDetail = new()
+            {
+                ExceptionMessage = exception.Message,
+                MethodName = _next.Method.Name,
+                Parameters = logParameters,
+                User = _httpContextAccessor.HttpContext.User.Identity?.Name??"?"
+            };
+
+            _loggerService.Error(JsonSerializer.Serialize(logDetail));
+            return Task.CompletedTask;
         }
 
         private Task HandleExceptionAsync(HttpResponse response, Exception exception)
