@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Domain.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,6 +15,7 @@ namespace Domain.Entities.User
         public byte[] PasswordSalt { get; set; }
         public byte[] PasswordHash { get; set; }
         public bool Status { get; set; }
+        public AuthenticatorType AuthenticatorType { get; set; }
 
         public virtual ICollection<UserOperationClaim> UserOperationClaims { get; set; } = null!;
         public virtual ICollection<RefreshToken> RefreshTokens { get; set; } = null!;
