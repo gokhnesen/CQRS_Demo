@@ -1,6 +1,6 @@
 ﻿namespace Application.Features.Users.Commands.Create
 {
-    public class CreatedUserResponse : IResponse
+    public class CreatedUserResponse
     {
         public int Id { get; set; }
         public string FirstName { get; set; }
